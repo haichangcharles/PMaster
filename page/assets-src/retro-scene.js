@@ -34,6 +34,12 @@ export function initRetro(canvas, opts = {}) {
   controls.target.set(0, 2.3, 0.4);
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.75;
+  // The scene is decoration inside a scrolling page, so it must never eat a scroll:
+  // wheel-to-dolly hijacks the page scroll under the cursor, and on touch the
+  // one-finger rotate swallows the swipe and traps the reader on the hero.
+  // Auto-rotation keeps running either way — update() ignores `enabled`.
+  controls.enableZoom = false;
+  if (window.matchMedia('(pointer: coarse)').matches) controls.enabled = false;
 
   /* lights */
   const keyLight = new THREE.DirectionalLight(0xfff5e6, 2.2);
@@ -292,6 +298,12 @@ export function initRetro(canvas, opts = {}) {
     camera.aspect = a;
     camera.fov = a < 0.9 ? 62 : a < 1.3 ? 52 : a < 1.7 ? 44 : 40;
     camera.updateProjectionMatrix();
+    // widening the fov alone still crops the keyboard and mouse on portrait
+    // viewports as the scene rotates; back the orbit off to fit the whole desk
+    const dist = a < 0.9 ? 19.5 : a < 1.3 ? 16.8 : 14.7;
+    const off = camera.position.clone().sub(controls.target).setLength(dist);
+    camera.position.copy(controls.target).add(off);
+    controls.update();
   }
   resize();
   if (window.ResizeObserver) new ResizeObserver(resize).observe(host);
