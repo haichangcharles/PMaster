@@ -158,10 +158,94 @@ export function initRetro(canvas, opts = {}) {
   cable([[4.9, 0.35, 3.0], [4.3, 0.18, 2.1], [3.4, 0.15, 1.7], [3.2, 0.3, 2.4]], 0.04);
   cable([[-1.8, 1.6, -4.6], [-2.6, 0.8, -5.2], [-3.4, 0.1, -4.8], [-4.2, 0.06, -4.0]], 0.06);
 
-  /* ground */
-  const GROUND = { light: opts.groundLight ?? 0xe7e2d5, dark: opts.groundDark ?? 0x0c0c11 };
-  const groundMat = new THREE.MeshStandardMaterial({ color: GROUND.light, roughness: 0.95, metalness: 0 });
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(40, 64), groundMat);
+  /* ground — procedural lunar regolith. The albedo and bump maps tile for fine
+     detail; a separate low-frequency height map drives real vertex displacement,
+     kept grain-free so the terrain rolls rather than crumples, and flattened at
+     the centre so the computer sits level on it. */
+  function moonSurface(){
+    var S=1024,ac=document.createElement("canvas"),hc=document.createElement("canvas"),dc=document.createElement("canvas");
+    ac.width=ac.height=hc.width=hc.height=dc.width=dc.height=S;
+    var A=ac.getContext("2d"),H=hc.getContext("2d"),D=dc.getContext("2d");
+    A.fillStyle="#b5b1a9";A.fillRect(0,0,S,S);
+    H.fillStyle="#808080";H.fillRect(0,0,S,S);
+    D.fillStyle="#808080";D.fillRect(0,0,S,S);
+    function tile(x,y,r,fn){for(var dx=-1;dx<=1;dx++)for(var dy=-1;dy<=1;dy++){
+      var px=x+dx*S,py=y+dy*S;
+      if(px+r<0||px-r>S||py+r<0||py-r>S)continue;
+      fn(px,py);}}
+    function blob(c,x,y,r,col){var g=c.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,col);g.addColorStop(1,"rgba(0,0,0,0)");
+      c.fillStyle=g;c.fillRect(x-r,y-r,2*r,2*r);}
+    /* --- tiled detail maps (albedo + bump) --- */
+    for(var i=0;i<24;i++){
+      var mx=Math.random()*S,my=Math.random()*S,mr=S*(.08+Math.random()*.16),dk=Math.random()<.55;
+      (function(mx,my,mr,dk){tile(mx,my,mr,function(px,py){
+        blob(A,px,py,mr,dk?"rgba(96,93,88,0.40)":"rgba(214,210,201,0.28)");
+        blob(H,px,py,mr,dk?"rgba(0,0,0,0.16)":"rgba(255,255,255,0.14)");});})(mx,my,mr,dk);}
+    function crater(x,y,r,fresh){
+      var squash=.82+Math.random()*.18,rot=Math.random()*Math.PI,R=r*1.34;
+      tile(x,y,R,function(px,py){
+        H.save();H.translate(px,py);H.rotate(rot);H.scale(1,squash);
+        var gh=H.createRadialGradient(0,0,0,0,0,R);
+        gh.addColorStop(0,"rgba(0,0,0,"+(.46+fresh*.28)+")");
+        gh.addColorStop(.54,"rgba(0,0,0,"+(.40+fresh*.24)+")");
+        gh.addColorStop(.66,"rgba(0,0,0,"+(.12+fresh*.08)+")");
+        gh.addColorStop(.74,"rgba(255,255,255,"+(.38+fresh*.32)+")");
+        gh.addColorStop(1,"rgba(255,255,255,0)");
+        H.fillStyle=gh;H.fillRect(-R,-R,2*R,2*R);H.restore();
+        A.save();A.translate(px,py);A.rotate(rot);A.scale(1,squash);
+        var ga=A.createRadialGradient(0,0,0,0,0,R);
+        ga.addColorStop(0,"rgba(84,81,77,"+(.16+fresh*.20)+")");
+        ga.addColorStop(.70,"rgba(84,81,77,"+(.08+fresh*.10)+")");
+        ga.addColorStop(.76,"rgba(236,232,224,"+(.10+fresh*.24)+")");
+        ga.addColorStop(1,"rgba(0,0,0,0)");
+        A.fillStyle=ga;A.fillRect(-R,-R,2*R,2*R);A.restore();});}
+    for(var i=0;i<7;i++)crater(Math.random()*S,Math.random()*S,S*(.055+Math.random()*.07),Math.random()*.5);
+    for(var i=0;i<58;i++)crater(Math.random()*S,Math.random()*S,S*(.018+Math.random()*.038),Math.random());
+    for(var i=0;i<270;i++)crater(Math.random()*S,Math.random()*S,S*(.0028+Math.pow(Math.random(),2.2)*.016),Math.random());
+    function grain(c,amt){var im=c.getImageData(0,0,S,S),d=im.data;
+      for(var j=0;j<d.length;j+=4){var v=(Math.random()-.5)*amt;d[j]+=v;d[j+1]+=v;d[j+2]+=v;}
+      c.putImageData(im,0,0);}
+    grain(A,26);grain(H,30);
+    /* --- macro displacement map: smooth, untiled, flat under the computer --- */
+    for(var i=0;i<18;i++){
+      var bx=Math.random()*S,by=Math.random()*S,br=S*(.06+Math.random()*.12);
+      blob(D,bx,by,br,Math.random()<.5?"rgba(0,0,0,0.30)":"rgba(255,255,255,0.26)");}
+    function bigCrater(x,y,r){
+      var squash=.84+Math.random()*.16,rot=Math.random()*Math.PI,R=r*1.32;
+      D.save();D.translate(x,y);D.rotate(rot);D.scale(1,squash);
+      var g=D.createRadialGradient(0,0,0,0,0,R);
+      g.addColorStop(0,"rgba(0,0,0,0.62)");
+      g.addColorStop(.55,"rgba(0,0,0,0.52)");
+      g.addColorStop(.68,"rgba(0,0,0,0.12)");
+      g.addColorStop(.76,"rgba(255,255,255,0.46)");
+      g.addColorStop(1,"rgba(255,255,255,0)");
+      D.fillStyle=g;D.fillRect(-R,-R,2*R,2*R);D.restore();}
+    for(var i=0;i<24;i++)bigCrater(Math.random()*S,Math.random()*S,S*(.030+Math.random()*.045));
+    for(var i=0;i<90;i++)bigCrater(Math.random()*S,Math.random()*S,S*(.012+Math.random()*.020));
+    var pad=D.createRadialGradient(S/2,S/2,0,S/2,S/2,S*.10);
+    pad.addColorStop(0,"rgba(128,128,128,1)");
+    pad.addColorStop(.54,"rgba(128,128,128,1)");
+    pad.addColorStop(1,"rgba(128,128,128,0)");
+    D.fillStyle=pad;D.fillRect(0,0,S,S);
+    function mk(cv,rep,srgb){var t=new THREE.CanvasTexture(cv);
+      t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep,rep);
+      t.anisotropy=renderer.capabilities.getMaxAnisotropy();
+      if(srgb)t.colorSpace=THREE.SRGBColorSpace;
+      return t;}
+    return{map:mk(ac,5.2,true),bump:mk(hc,5.2,false),height:mk(dc,1,false)};
+  }
+
+  const GROUND = { light: opts.groundLight ?? 0xe7e2d5, dark: opts.groundDark ?? 0x7a808a };
+  const moon = moonSurface();
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: GROUND.light, map: moon.map,
+    bumpMap: moon.bump, bumpScale: 0.5,
+    displacementMap: moon.height, displacementScale: 2.5, displacementBias: -1.25,
+    roughness: 1, metalness: 0
+  });
+  // 120u wide so the square edge falls past fog-far (62) and never shows.
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(120, 120, 288, 288), groundMat);
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
   scene.add(ground);
 
