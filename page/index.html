@@ -83,13 +83,20 @@ header{position:sticky;top:0;z-index:30;background:var(--nav);backdrop-filter:sa
 .tile.wide{grid-column:span 2}
 .tile h6{font-size:17px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
 .tile p{font-size:14px;color:var(--gray);line-height:1.5}
-.idxgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:44px;text-align:left}
-.idxcol h6{font-size:12px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+/* multi-column, not grid: grid aligns rows, so a short group leaves a tall blank
+   beside a long one. Columns let the four blocks flow top-to-bottom, left-to-right
+   and balance themselves — 4 across at full width, a clean 10/10 split at two. */
+.idxgrid{columns:4;column-gap:28px;margin-top:44px;text-align:left}
+.idxcol{break-inside:avoid;-webkit-column-break-inside:avoid}
+.idxcol h6{font-size:12px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;break-after:avoid}
 .idxcol a{display:block;font-size:15.5px;color:var(--ink2);padding:9px 0;border-bottom:1px solid var(--hair2);cursor:pointer;letter-spacing:-.008em;transition:color .2s var(--ease),padding-left .2s var(--ease)}
 .idxcol a:hover{color:var(--link);padding-left:4px}
-/* the second 知识库 column carries no label; the blank keeps rows aligned across columns */
+/* the 知识库 continuation carries no label; the blank keeps the columns' first rows level */
 .idxcol h6.ghost{visibility:hidden}
-@media(max-width:1000px){.idxgrid{grid-template-columns:repeat(2,1fr);gap:26px}}
+@media(max-width:1000px){.idxgrid{columns:2;column-gap:26px}
+  /* groups stack once they share a column; .cont is excluded because it starts
+     column two and must stay level with the first group's heading */
+  .idxcol+.idxcol:not(.cont) h6{margin-top:26px}}
 .related-links{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 8px}
 .related-links a{display:inline-block;padding:9px 16px;border-radius:980px;background:var(--panel);border:1px solid var(--hair2);color:var(--link);font-size:14px;cursor:pointer;letter-spacing:-.008em;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
 .related-links a:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
@@ -178,8 +185,25 @@ article hr{border:none;border-top:1px solid var(--hair2);margin:46px 0}
   .sec h1{font-size:34px}
   .sec h2{font-size:28px}
   .sec .sub{font-size:17px}
-  .idxgrid{grid-template-columns:1fr;gap:22px}
+  /* one column, and the groups start collapsed — 20 entries is a lot of scrolling
+     before you reach anything else on the page. The 知识库 continuation has no
+     header of its own; its parent's toggle drives it. */
+  .idxgrid{columns:1;margin-top:34px}
   .idxcol h6.ghost{display:none}
+  .idxcol{border-bottom:1px solid var(--hair2)}
+  .idxcol.cont{border-bottom:none}
+  .idxcol h6{display:flex;align-items:center;justify-content:space-between;
+    font-size:15px;text-transform:none;letter-spacing:-.01em;color:var(--ink);
+    margin:0;padding:15px 0;cursor:pointer}
+  .idxcol h6::after{content:'';width:7px;height:7px;margin-right:3px;
+    border-right:1.6px solid var(--gray2);border-bottom:1.6px solid var(--gray2);
+    transform:rotate(45deg);transition:transform .3s var(--ease)}
+  .idxcol.open h6::after{transform:rotate(-135deg)}
+  .idxcol .idxlist{max-height:0;overflow:hidden;transition:max-height .36s var(--ease)}
+  .idxcol.open .idxlist{max-height:640px}
+  .idxcol.cont .idxlist{transition:none}
+  .idxcol a{padding-left:10px}
+  .idxcol a:last-child{border-bottom:none}
 }
 @media(max-width:900px){
   .shell{grid-template-columns:1fr;gap:0}
@@ -240,12 +264,12 @@ article hr{border:none;border-top:1px solid var(--hair2);margin:46px 0}
 <div class="tile wide" onclick="jump('china-playbook')"><h6>国内实战打法</h6><p>需求评审、竞品跟进、灰度文化——在这个环境里把正确的事做成。</p></div>
 </div>
 <div class="idxgrid">
-<div class="idxcol"><h6>学习材料</h6>
+<div class="idxcol"><h6 onclick="toggleIdx(this)">学习材料</h6><div class="idxlist">
 <a onclick="jump('handbook')">框架与模板手册</a>
 <a onclick="jump('scenario20')">一个场景×20框架</a>
 <a onclick="jump('answers')">自问自答模板集</a>
-</div>
-<div class="idxcol"><h6>知识库</h6>
+</div></div>
+<div class="idxcol"><h6 onclick="toggleIdx(this)">知识库</h6><div class="idxlist">
 <a onclick="jump('discovery')">产品发现与用户研究</a>
 <a onclick="jump('strategy')">产品战略与定位</a>
 <a onclick="jump('strategy-advanced')">高阶战略</a>
@@ -253,21 +277,21 @@ article hr{border:none;border-top:1px solid var(--hair2);margin:46px 0}
 <a onclick="jump('prioritization')">优先级与路线图</a>
 <a onclick="jump('execution')">PRD 与执行</a>
 <a onclick="jump('metrics')">指标与实验</a>
-</div>
-<div class="idxcol"><h6 class="ghost" aria-hidden="true">知识库</h6>
+</div></div>
+<div class="idxcol cont"><h6 class="ghost" aria-hidden="true">知识库</h6><div class="idxlist">
 <a onclick="jump('data-system')">数据体系与看板</a>
 <a onclick="jump('growth')">增长与变现</a>
 <a onclick="jump('ai-products')">AI 产品</a>
 <a onclick="jump('stakeholders-career')">干系人与成长</a>
 <a onclick="jump('china-playbook')">国内实战打法</a>
 <a onclick="jump('frameworks')">经典框架速查</a>
-</div>
-<div class="idxcol"><h6>面试专区</h6>
+</div></div>
+<div class="idxcol"><h6 onclick="toggleIdx(this)">面试专区</h6><div class="idxlist">
 <a onclick="jump('question-bank')">面试题库</a>
 <a onclick="jump('pm-job-interview-prep')">面试题型套路</a>
 <a onclick="jump('interview-coach')">面试教练</a>
 <a onclick="jump('experience-mining')">经历挖掘</a>
-</div>
+</div></div>
 </div>
 </div>
 </section>
@@ -4025,6 +4049,13 @@ function goTab(id){
 }
 /* home */
 function jump(k){goTab('read');openDoc(k,findNav(k));}
+/* homepage index groups — collapsed on narrow screens only (see the 640px block).
+   A group's continuation columns have no header, so the parent's toggle drives them. */
+function toggleIdx(h){
+  const col=h.parentElement, on=col.classList.toggle('open');
+  let n=col.nextElementSibling;
+  while(n&&n.classList.contains('cont')){n.classList.toggle('open',on);n=n.nextElementSibling;}
+}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.sec h2,.tile').forEach((el,i)=>{el.style.opacity=0;el.style.transform='translateY(22px)';el.style.transition='opacity .7s var(--ease) '+(i%4*60)+'ms,transform .7s var(--ease) '+(i%4*60)+'ms';io.observe(el);});
 /* sidebar */
