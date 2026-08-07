@@ -85,7 +85,10 @@ export function initRetro(canvas, opts = {}) {
   rbox(monitor, 4.1, 2.9, 1.0, 0.10, 0, -0.1, -3.2, MAT.body);
   rbox(monitor, 6.0, 4.4, 0.5, 0.12, 0, 0, 0.85, MAT.bezel);
   for (let i = 0; i < 9; i++) rbox(monitor, 0.14, 0.05, 1.6, 0.02, -2.0 + i * 0.5, 2.16, -0.6, MAT.dark);
-  for (let i = 0; i < 6; i++) rbox(monitor, 0.05, 1.8, 0.14, 0.02, 2.96, 0.4, -0.2 - i * 0.4, MAT.dark);
+  // side vents follow the stepped shell: a long run on the main box face,
+  // then a shorter, inset run on the first rear hump (never bridge the step)
+  for (let i = 0; i < 4; i++) rbox(monitor, 0.05, 1.8, 0.14, 0.02, 2.96, 0.4, -0.2 - i * 0.4, MAT.dark);
+  for (let i = 0; i < 3; i++) rbox(monitor, 0.05, 1.3, 0.14, 0.02, 2.56, 0.15, -1.6 - i * 0.4, MAT.dark);
 
   /* CRT screen */
   const scrCanvas = document.createElement('canvas');
