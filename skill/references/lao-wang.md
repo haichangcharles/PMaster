@@ -123,7 +123,7 @@
 | 老王讲的内容 | PMaster 里对应/已有的条目 | 老王补充了什么 |
 |---|---|---|
 | PEST 模型（时间窗判断） | frameworks.md 第一节 PEST 行 | 给了"外卖 = 智能手机降到 600 元"这个具体的"为什么是现在"案例，把抽象框架落到了真实决策上 |
-| 波特五力 / 三战略 | strategy.md 第 5 节 | 指出互联网时代 Cost Leadership 该理解为规模效应带来的 Experience Leadership，Differentiation/Focus 的有效性被互联网平台特性削弱 |
+| 波特五力 / 三战略 | strategy.md 第 6 节 | 指出互联网时代 Cost Leadership 该理解为规模效应带来的 Experience Leadership，Differentiation/Focus 的有效性被互联网平台特性削弱 |
 | STP / 4P | frameworks.md 第三节 | 给了来往 vs 钉钉（Segmenting）、淘宝 vs 京东（Targeting）、360 vs 瑞星（互联网时代 4P 重构）等具体案例 |
 | PMF | strategy.md 探索期一节 | 补充了"1000 人 Love 你的产品 vs 10000 人 Like 你的产品"的选人群方法，以及去爱好者社区找 Early Adopter 的具体操作 |
 | 创新的扩散（五类人群） | 目前 PMaster 里没有独立条目，可视为对 PMF 一节的前置理论 | 给了美团外卖早期糙产品匹配 Innovator 阶段的完整案例链 |

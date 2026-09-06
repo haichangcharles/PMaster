@@ -1,6 +1,6 @@
 # 交接说明：给接手这个项目的下一个 agent
 
-最后更新：2026-09-02。这份文件是给接手 PMaster 项目的下一个 agent（不管是云端还是本地）看的，目的是让它不用重新问用户一遍"这是什么项目/现在进度到哪了"。
+最后更新：2026-09-06。这份文件是给接手 PMaster 项目的下一个 agent（不管是云端还是本地）看的，目的是让它不用重新问用户一遍"这是什么项目/现在进度到哪了"。
 
 ## 这是什么项目
 
@@ -36,6 +36,21 @@ git log --oneline -10
 git status
 ```
 
+## 内容更新的硬规则：一次改动 = 三端同步（最容易翻车的地方）
+
+用户明确要求过：**新内容不能只进 skill 知识库，前端网页里也必须有**。这个仓库有三份"同一内容的不同载体"，改任何一篇 md 之后必须全部走完，缺一个用户就会看到不一致：
+
+1. **源文件**：`skill/references/*.md`（知识库/面试专区）或 `page/docs/*.md`（学习材料，教材体例：是什么/怎么用/用错的样子/面试怎么考）
+2. **技能包**：`bash skill/build.sh` 重新打包 `skill/pmaster.skill`
+3. **网页**：`python3 page/build_data.py` 把新内容重新嵌进 `page/index.html`（网页读的是内嵌的 `DATA` 常量，不会自动跟着 md 走）
+4. **验证**：Playwright 打开 `page/index.html` → `goTab('read')` → `openDoc(key, findNav(key))` → 检查新章节文字正常分段、`<li>` 数量正常、console 无 `pageerror`
+
+**判断该进哪一端**：方法论/判断力 → `skill/references/` 对应主题文件；系统教材式讲解 → `page/docs/handbook.md` 对应章节。**重要的内容两边都要有**（skill 版讲透判断，handbook 版按四段体例讲成教材），不是二选一。
+
+**改章节编号时**：本库大量使用"详见 xxx.md 第 N 节"这种跨文件引用。插入新章节导致后续编号顺延时，必须 `grep -rn "<文件名>.md 第" --include="*.md" .` 把所有引用一起改掉，还有 `handbook.md` 末尾的"触发线索 → 章节号"索引表和 `SKILL.md` 的知识库导航表。
+
+**新增整篇文档时**才需要额外手动改 `page/index.html` 里的三处计数文案（开机动画 `DOCUMENTS ... N OK` / `<h2>N篇文档</h2>` / `CARD_META` 里的领域数）——只改已有文件内容不用动。
+
 ## 关键文件/工具
 
 - `skill/build.sh`：把 `skill/SKILL.md` + `skill/references/` 打包成 `skill/pmaster.skill`（顶层目录名必须是 `pmaster`）
@@ -44,7 +59,7 @@ git status
 
 ## 目前的状态（截至这次更新）
 
-`main` 分支已经是最新，GitHub 和用户本地都同步到了这份文档写下时的最新提交（`老王专栏` + 全站列表排版修复 + 第 3.5 节 Agent 评测题 + `page/build_data.py` 检入仓库 + 面试题库若干新增内容）。跑 `git log --oneline -5` 确认。
+`main` 分支最新提交包含：老王专栏、全站列表排版修复、第 3.5 节 Agent 评测题、`page/build_data.py` 检入仓库、面试题库若干新增、面试"产品 sense"三要素（逻辑/优先级/概括）+ 方案分层表达 + 经历完整性六段自查、以及战略章节新增的 Playing to Win 五问瀑布与 Biddle 的 GLEe/DHM/GEM/SMT 流水线（`strategy.md` 第 2 节 + `handbook.md` 7.2，章节编号已全库顺延对齐）。**别凭这段话假设提交号，跑 `git log --oneline -5` 确认。**
 
 ## 还没做完、用户提过但还悬着的事
 

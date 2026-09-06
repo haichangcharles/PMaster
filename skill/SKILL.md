@@ -53,7 +53,7 @@ description: 世界头部梯队产品经理的完整知识体系与判断力。�
 | 判断挂锚的弹药：真实案例、行业数字、组织现实 | `references/industry-sense.md` | 20+ 案例（事实+判断）、行业基准区间、组织潜规则与角色激励、使用纪律 |
 | 深度案例专栏：战略判断如何在真实生意里做对做错（老王/王慧文·美团） | `references/lao-wang.md` | 职业产品经理 vs 创业产品经理、市场体量判断、规模效应三曲线与 Scope、马太效应、PMF 与创新的扩散、STP/4P 互联网时代重构、供需关系五维判断，全部配美团/外卖/团购真实决策案例，与 frameworks.md/strategy.md 的抽象条目互为表里 |
 | 需求分析、用户研究、访谈、验证想法 | `references/discovery.md` | JTBD、用户访谈法、需求真伪判断、Persona、机会识别、从零推演产品的五步结构 |
-| 产品战略、定位、竞争、市场进入 | `references/strategy.md` | 战略框架、护城河、定位、Kano、市场分析、第二曲线 |
+| 产品战略、定位、竞争、市场进入 | `references/strategy.md` | 战略框架（Rumelt 三件套 / Playing to Win 五问 / GLEe-DHM-GEM-SMT 流水线）、护城河、定位、Kano、市场分析、竞品分析、第二曲线 |
 | 平台生态、竞争博弈、战略节奏（高阶） | `references/strategy-advanced.md` | 双边市场冷启动、补贴纪律、平台治理、开放 vs 封闭、价格战推演、与巨头共存、作战计划模板 |
 | 商业分析/商分、行业研究、变现深度 | `references/business-analysis.md` | 一周吃透一个行业 SOP、利润池、商业模式六关评估、广告/订阅/佣金/增值的深度打法 |
 | 排优先级、做路线图、资源分配 | `references/prioritization.md` | RICE/ICE、机会评分、Cost of Delay、Now-Next-Later |
