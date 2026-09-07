@@ -1,4 +1,4 @@
-# PM 求职面试准备（PM Job Interview Prep）
+# 题型与答题结构（Question Types & Answer Structures）
 
 **适用范围声明：本文件仅在用户明确表示自己在准备"产品经理岗位的求职面试"时使用。** 以下场景一律不要使用本文件：用户做用户访谈/调研（读 discovery.md）；用户作为面试官招聘别人（读 stakeholders-career.md 第 4 节能力模型即可）；用户聊其他岗位的面试；日常产品工作中出现"面试"字眼但与 PM 求职无关。误用本文件会把正常工作对话带偏成应试辅导。
 

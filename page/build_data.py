@@ -12,10 +12,10 @@
 必须重新跑这个脚本，把新内容重新嵌进 page/index.html，再截图/预览确认。
 
 新增一篇文档到网页的步骤：
-    1. 文件放进 skill/references/<key>.md（知识库/面试专区）或 page/docs/<key>.md（学习材料）
+    1. 文件放进 skill/references/<key>.md（知识库/表达与演练）或 page/docs/<key>.md（学习材料）
     2. 在下面的 TITLES 字典里加一行 "<key>": "<侧边栏显示的短标题>"
     3. 如果是 page/docs 里的文件，在 PAGE_DOCS 字典里加一行 "<key>": "page/docs/<文件名>.md"
-    4. 在下面的 ORDER 字典里，把 "<key>" 加进对应分组（学习材料 / 知识库 / 面试专区）的数组里
+    4. 在下面的 ORDER 字典里，把 "<key>" 加进对应分组（学习材料 / 知识库 / 表达与演练）的数组里
     5. 跑本脚本
     6. 手动更新 page/index.html 里的三处计数（脚本不自动改，因为它们是自然语言文案）：
        - `'DOCUMENTS ........ N OK'`（开机动画行数）
@@ -77,10 +77,10 @@ TITLES = {
     'stakeholders-career': '干系人与成长',
     'china-playbook': '国内实战打法',
     'frameworks': '经典框架速查',
-    'question-bank': '面试题库',
-    'pm-job-interview-prep': '面试题型套路',
-    'interview-coach': '面试教练',
-    'experience-mining': '经历挖掘',
+    'question-bank': '实战题库',
+    'pm-job-interview-prep': '题型与答题结构',
+    'interview-coach': '追问式教练',
+    'experience-mining': '经历梳理',
 }
 
 PAGE_DOCS = {
@@ -96,7 +96,7 @@ ORDER = {
              "business-analysis", "prioritization", "execution", "metrics", "data-system", "data-selection",
              "metric-library", "growth", "ai-products", "ai-evals", "stakeholders-career", "china-playbook",
              "frameworks"],
-    '面试专区': ["question-bank", "pm-job-interview-prep", "interview-coach", "experience-mining"],
+    '表达与演练': ["question-bank", "pm-job-interview-prep", "interview-coach", "experience-mining"],
 }
 
 

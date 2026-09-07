@@ -1,6 +1,6 @@
 ---
 name: pmaster
-description: 世界头部梯队产品经理的完整知识体系与判断力。任何产品经理相关的任务都应使用此技能——包括但不限于：需求分析、写 PRD/需求文档、产品战略、竞品分析、优先级排序、路线图、用户研究、数据指标分析、A/B 测试、增长、定价、GTM、AI 产品设计、需求评审、向上汇报、经典框架运用（SWOT、4P、上瘾模型、峰终定律等）。当用户明确提出要准备 PM 求职面试、要求模拟面试/mock interview、梳理面试经历、或复盘刚面完的 PM 面试时，也使用此技能（内含面试教练模块；仅限用户明确点名求职面试场景）。触发词包括 "PM"、"产品经理"、"产品"、"需求"、"PRD"、"roadmap"、"用户调研"、"竞品"、"增长"、"留存"、"北极星指标" 等。即使用户没有明说"以产品经理身份"，只要任务本质上是产品决策或产品文档，就使用此技能。Use for ANY product management task — specs, strategy, prioritization, research synthesis, metrics, growth, pricing, AI product design — even if the user doesn't explicitly say "as a PM".
+description: 世界头部梯队产品经理的完整知识体系与判断力。任何产品经理相关的任务都应使用此技能——包括但不限于：需求分析、写 PRD/需求文档、产品战略、竞品分析、优先级排序、路线图、用户研究、数据指标分析、A/B 测试、增长、定价、GTM、AI 产品设计、需求评审、向上汇报、经典框架运用（SWOT、4P、上瘾模型、峰终定律等）。当用户明确提出要准备 PM 求职面试、要求模拟面试/mock interview、梳理面试经历、或复盘刚面完的 PM 面试时，也使用此技能（内含教学与演练模块；仅限用户明确点名求职面试场景）。触发词包括 "PM"、"产品经理"、"产品"、"需求"、"PRD"、"roadmap"、"用户调研"、"竞品"、"增长"、"留存"、"北极星指标" 等。即使用户没有明说"以产品经理身份"，只要任务本质上是产品决策或产品文档，就使用此技能。Use for ANY product management task — specs, strategy, prioritization, research synthesis, metrics, growth, pricing, AI product design — even if the user doesn't explicitly say "as a PM".
 ---
 
 # PM Knowledge Base — 头部梯队产品经理知识库
@@ -68,12 +68,12 @@ description: 世界头部梯队产品经理的完整知识体系与判断力。�
 | 向上汇报、跨部门协作、职级成长 | `references/stakeholders-career.md` | 沟通框架、影响力、汇报结构、PM 能力模型 |
 | 国内互联网语境下的实战打法 | `references/china-playbook.md` | 需求评审、竞品跟进、数据驱动迭代、增长本土化 |
 | 经典框架速查（"八股"大全） | `references/frameworks.md` | SWOT、PEST、4P、5W2H、HMW、上瘾模型、福格模型、峰终定律、双钻、体验五要素、画布、BCG 等 30+ 框架的本质/场景/误用 |
-| PM 求职面试：题型答题套路 | `references/pm-job-interview-prep.md` | 产品设计题、需求评估题、指标异动题、估算题、行为题、海外体系映射 |
-| PM 求职面试：模拟面试与教练 | `references/interview-coach.md` | 教练循环诊断、模拟面试官运行规则、评分 rubric、真实面试复盘 |
-| PM 求职面试：经历梳理与同行感 | `references/experience-mining.md` | 经历挖掘访谈法、价值重估、转岗叙事重构、同行感五信号、问题潜台词 |
-| PM 求职面试：题库 | `references/question-bank.md` | 九大类真题题库（设计/指标/估算/策略/工作方法/协作/行为/职业/AI），模拟面试出题用 |
+| 表达与演练：题型与答题结构 | `references/pm-job-interview-prep.md` | 产品设计题、需求评估题、指标异动题、估算题、行为题、海外体系映射 |
+| 表达与演练：模拟演练与教练 | `references/interview-coach.md` | 教练循环诊断、模拟面试官运行规则、评分 rubric、真实面试复盘 |
+| 表达与演练：经历梳理与同行感 | `references/experience-mining.md` | 经历挖掘访谈法、价值重估、转岗叙事重构、同行感五信号、问题潜台词 |
+| 表达与演练：题库 | `references/question-bank.md` | 九大类真题题库（设计/指标/估算/策略/工作方法/协作/行为/职业/AI），模拟面试出题用 |
 
-**面试三件套的触发边界**：以上三个面试文件，仅当用户明确表示在准备 PM 岗位求职面试、要求模拟面试、或复盘真实面试时读取。用户做用户访谈/调研读 discovery.md；用户作为面试官招人读 stakeholders-career.md；其他岗位的面试话题不适用。日常产品工作对话中不要主动引用面试文件——那会把工作讨论带偏成应试辅导（但面试题背后的方法本身都在工作文件里，日常照常使用）。
+**演练四件套的触发边界**：以上四个演练文件，仅当用户明确表示在准备 PM 岗位求职面试、要求模拟面试、或复盘真实面试时读取。用户做用户访谈/调研读 discovery.md；用户作为面试官招人读 stakeholders-career.md；其他岗位的面试话题不适用。日常产品工作对话中不要主动引用面试文件——那会把工作讨论带偏成应试辅导（但面试题背后的方法本身都在工作文件里，日常照常使用）。
 
 ## 头部 PM 的七条决策原则（任何任务都先过一遍）
 

@@ -1,4 +1,4 @@
-# PM 面试教练（Interview Coach）
+# 追问式教练（Coaching & Mock Practice）
 
 **适用范围：仅当用户明确表示在准备 PM 求职面试、要求模拟面试、或刚面完真实面试想复盘时使用。** 本文件是教练的"运行手册"——怎么带一个 junior 走完整个提升循环。题型答题结构见 pm-job-interview-prep.md，经历梳理与同行感训练见 experience-mining.md。
 

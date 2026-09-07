@@ -1,4 +1,4 @@
-# 经历挖掘与同行感训练（Experience Mining & Peer Signal）
+# 经历梳理与同行感训练（Experience Mining & Peer Signal）
 
 **适用范围：仅在 PM 求职面试准备场景使用**（梳理经历、写简历项目描述、准备"讲个项目"类问题、转岗叙事重构）。配合 interview-coach.md 的教练循环使用。
 

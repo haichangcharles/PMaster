@@ -1,4 +1,4 @@
-# PM 面试题库（Question Bank）
+# PM 实战题库（Question Bank）
 
 **适用范围：仅在 PM 求职面试准备场景使用**，配合 interview-coach.md（出题时从本题库按岗位类型抽题）与 pm-job-interview-prep.md（每类题的答题结构）。
 
